@@ -752,7 +752,16 @@ body {
   border-radius: 0 0 2px 2px;
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
   color: #1d2129;
-  display: none;
+  opacity: 0;
+  transition: 0.5s ease-in-out;
+  pointer-events: none;
+}
+
+#header .bell.on .notice {
+  display: block;
+  transition: 0.5s ease-in-out;
+  opacity: 1;
+  pointer-events: inherit;
 }
 
 #header .icon--arrow-top {
@@ -800,4 +809,41 @@ body {
 #header .notice .time {
   color: #90949c;
   margin-top: 10px;
+}
+
+@media screen and (max-width: 1240px) {
+  #wrapper .left_box {
+    display: none;
+  }
+
+  #wrapper .right_box {
+    display: none;
+  }
+  #side_box {
+    display: none;
+  }
+
+  #header .inner {
+    padding-right: 0;
+    width: 90%;
+  }
+}
+
+@media screen and (max-width: 820px) {
+  #header .inner .left {
+    display: none;
+  }
+
+  #header .inner .right {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  #header .inner .right > div:after {
+    display: none;
+  }
+
+  #header .inner .right .question {
+    margin-right: 40px;
+  }
 }
