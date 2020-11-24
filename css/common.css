@@ -446,6 +446,7 @@
   background: url("../imgs/bg04.png") no-repeat -433px -246px;
   width: 18px;
   height: 16px;
+  outline: none;
 }
 
 .icon--main-logo {
@@ -673,6 +674,7 @@ body {
   transform: translateY(-50%);
   border: none;
   background: transparent;
+  outline: none;
 }
 
 #search {

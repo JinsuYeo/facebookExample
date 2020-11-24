@@ -306,6 +306,11 @@
   align-items: center;
 }
 
+.contents .comment_container .delete {
+  margin-left: auto;
+  cursor: pointer;
+}
+
 .contents .comment_container .text_container {
   display: flex;
   padding: 10px;
@@ -354,6 +359,7 @@
   top: 50%;
   transform: translateY(-50%);
   cursor: pointer;
+  outline: none;
 }
 
 #wrapper .right_box {

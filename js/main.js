@@ -7,6 +7,8 @@ window.addEventListener('DOMContentLoaded',function(){
     const leftBox = document.querySelector('.left_box');
     const rightBox = document.querySelector('.right_box')
     const feed = document.querySelector('#contents_container')
+    const txt = document.querySelector('#comment37')
+
 
     leftBox.style.right = `${innerWidth * .5 + 430}px`
     rightBox.style.left = `${innerWidth * .5 + 90}px`
@@ -20,14 +22,40 @@ window.addEventListener('DOMContentLoaded',function(){
         this.classList.toggle('on')
     }
 
-    
+    function addMorePostAjax(data){
+        feed.insertAdjacentHTML('beforeend', data)
+    }
+
+    function callMorePostAjax(pageValue) {
+
+        $.ajax({
+            type: 'POST',
+            url: 'data/post.html',
+            data: pageValue,
+            dataType: 'html',
+            success: addMorePostAjax,
+            error: ()=>{
+                alert('문제가 발생했습니다!')
+            }
+        })
+    }
  
     function scrollFunc() {
         let documentHeight = document.body.scrollHeight;
         let scrollHeight = pageYOffset + window.innerHeight;
 
         if(scrollHeight >= documentHeight-1){
-            console.log('end');
+            
+            let pager = document.querySelector('#page');
+            let pageValue = document.querySelector('#page').value;
+
+            pager.value = parseInt(pageValue) + 1;
+
+                if(pageValue > 5) {
+                   pager.value = pageValue
+                } else {
+                    callMorePostAjax(pageValue);
+                }
         }
     }
 
@@ -69,6 +97,44 @@ window.addEventListener('DOMContentLoaded',function(){
         } else if (elem.matches('[data-name="more"]')){
             console.log('more')
             elem.classList.toggle('active')
+        } else if (elem.matches('[data-name="send"]')){
+            
+            $.ajax({
+                type: 'POST',
+                url: 'data/comment.html',
+                data: '',
+                dataType: 'html',
+                success: (data)=>{
+                    document.querySelector('.comment_container').insertAdjacentHTML('beforeend', data)
+                },
+                error: ()=>{
+                    alert('로그인이 필요합니다.');
+                    window.location.replace('https://www.naver.com')
+                }
+            })
+
+            txt.value = '';
+
+        } else if (elem.matches('[data-name="delete"]')){
+            if(confirm('정말 삭제하시겠습니까?') === true){
+
+                $.ajax({
+                    type: 'POST',
+                    url: './data/delete.json',
+                    data: '',
+                    dataType: 'json',
+                    success: (response)=>{
+                        if(response.status){
+                            let comt = document.querySelector('.comment-37')
+                            comt.remove();
+                        }
+                    },
+                    error: ()=>{
+                        alert('로그인이 필요합니다.')
+                    }
+                })
+
+            };
         }
     }
 
